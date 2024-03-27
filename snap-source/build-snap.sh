@@ -1,14 +1,18 @@
 set -eu
+function My-Eval() {
+    Say "[Invoking] $*"
+    time eval "$@"
+}
 chmod +x snap/hooks/configure
 chmod +x w3diskmark
 ver=$(cat bin-x64/VERSION); sed -i "/^version\:/d" snap/snapcraft.yaml; printf "\n\nversion: $ver\n" >> snap/snapcraft.yaml; echo "SNAP VERSION: $ver"
 for arch in x64 arm64 arm; do cp -v w3diskmark bin-$arch/; done
 pkill w3diskmark || true
-sudo snap remove --purge w3diskmark || true
+My-Eval sudo snap remove --purge w3diskmark || true
 rm -f w3diskmark*.snap || true
-snapcraft clean; 
-sudo apt-get install liblttng-ust0 fio -y -q
-time sudo snapcraft --destructive-mode --debug
+My-Eval snapcraft clean 
+My-Eval sudo apt-get install liblttng-ust0 fio -y -q
+My-Eval sudo snapcraft --destructive-mode --debug
 Say "Success"
 exit 0
 
