@@ -47,7 +47,9 @@ jobs:
       time sudo snap restart w3diskmark 
       # bash -c w3diskmark &
       sleep 10
-      Say "PROCESSES"
+      Say "ALL THE PROCESSES"
+      sudo ps -aux
+      Say "SNAP PROCESSES"
       sudo ps -aux | grep Universe
       Say "SNAP SERVICES"
       sudo snap services
