@@ -55,7 +55,8 @@ jobs:
       cd snap-source
 
       for f in *.snap; do
-        cat $f | xz -z -9 -e > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
+        # cat $f | xz -z -1 > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
+        cp -v $f $SYSTEM_ARTIFACTSDIRECTORY/
       done
     # condition: succeededOrFailed()
     displayName: 'Compress artifact image'
