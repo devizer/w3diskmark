@@ -52,6 +52,7 @@ jobs:
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
+      sudo chown -R $USER $HOME
       find $HOME -name '*.log' -exec cp -v -f {} $SYSTEM_ARTIFACTSDIRECTORY \;
 
       cd snap-source
