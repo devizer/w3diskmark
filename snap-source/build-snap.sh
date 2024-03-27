@@ -14,7 +14,7 @@ rm -f w3diskmark*.snap || true
 My-Eval sudo snap install lxd || true
 My-Eval lxd init --auto || true
 My-Eval sudo lxd init --auto || true
-My-Eval sudo lxc launch ubuntu:22.04
+# My-Eval sudo lxc launch ubuntu:22.04
 
 
 My-Eval sudo snap install strace-static
