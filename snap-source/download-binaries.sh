@@ -8,4 +8,4 @@ for arch in x64 arm64 arm; do
   try-and-retry curl -kfSL -o /tmp/w3diskmark-$arch.tar.xz "$url"
   tar xJf /tmp/w3diskmark-$arch.tar.xz
 done
-popd.
+popd
