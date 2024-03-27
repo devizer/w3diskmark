@@ -10,9 +10,10 @@ for arch in x64 arm64 arm; do cp -v w3diskmark bin-$arch/; done
 pkill w3diskmark || true
 My-Eval sudo snap remove --purge w3diskmark || true
 rm -f w3diskmark*.snap || true
+My-Eval sudo snap install strace-static
 My-Eval snapcraft clean  || true
 My-Eval sudo apt-get install liblttng-ust0 fio -y -q || true # missing in 22.04
-My-Eval sudo snapcraft --destructive-mode --debug
+My-Eval sudo snapcraft --strace=--raw --destructive-mode --debug
 Say "Success"
 exit 0
 
