@@ -52,13 +52,17 @@ jobs:
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
+      find $HOME -name '*.log' -exec cp -v -f {} $SYSTEM_ARTIFACTSDIRECTORY \;
+
       cd snap-source
 
       for f in *.snap; do
         # cat $f | xz -z -1 > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
         cp -v $f $SYSTEM_ARTIFACTSDIRECTORY/
       done
-    # condition: succeededOrFailed()
+
+
+    condition: succeededOrFailed()
     displayName: 'Compress artifact image'
 
   - task: PublishBuildArtifacts@1
