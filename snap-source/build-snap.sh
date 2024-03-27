@@ -7,4 +7,7 @@ pkill w3diskmark || true
 sudo snap remove --purge w3diskmark || true
 rm -f w3diskmark*.snap || true
 # snapcraft clean; 
-time sudo snapcraft --destructive-mode --debug
+# time sudo snapcraft --destructive-mode --debug
+time sudo snapcraft clean 
+time sudo snapcraft clean --use-lxd --debug
+time sudo snapcraft --use-lxd --debug
