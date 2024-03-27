@@ -21,6 +21,7 @@ My-Eval sudo snap install strace-static
 My-Eval snapcraft clean --destructive-mode || true
 My-Eval sudo apt-get install liblttng-ust0 fio -y -q || true # missing in 22.04
 My-Eval sudo snapcraft --destructive-mode --debug
+sudo ls -lah *.snap
 Say "Success"
 exit 0
 
