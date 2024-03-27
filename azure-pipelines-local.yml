@@ -59,7 +59,7 @@ jobs:
   - script: |
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
-      time sudo snap logs w3diskmark.service |& tee $SYSTEM_ARTIFACTSDIRECTORY/w3diskmark.service.log
+      time sudo snap logs -n=all w3diskmark.service |& tee $SYSTEM_ARTIFACTSDIRECTORY/w3diskmark.service.log
     displayName: 'Snap Daemon Logs'
 
   - script: |
