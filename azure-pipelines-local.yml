@@ -42,8 +42,8 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
 
-      snap install w3diskmark*.snap --devmode
-      sudo snap set w3diskmark http.port=5555
+      time sudo snap install w3diskmark*.snap --devmode
+      time sudo snap set w3diskmark http.port=5555
       bash -c w3diskmark &
       sleep 10
     displayName: 'Smoke Test'
