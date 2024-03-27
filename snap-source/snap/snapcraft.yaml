@@ -36,3 +36,9 @@ parts:
 apps:
   w3diskmark:
     command: w3diskmark
+    daemon: simple
+    install-mode: enable
+    refresh-mode: restart
+    restart-condition: on-failure
+    restart-delay: 10s
+
