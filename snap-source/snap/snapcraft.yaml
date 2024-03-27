@@ -35,7 +35,7 @@ parts:
 
 apps:
   service:
-    command: w3diskmark
+    command: ./w3diskmark
     daemon: simple
     install-mode: enable
     refresh-mode: restart
