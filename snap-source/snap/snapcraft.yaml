@@ -14,7 +14,7 @@ parts:
       snapcraftctl --debug pull
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
-      echo "snapcraftctl version is $(snapcraftctl --version)"
+      # echo "snapcraftctl version is $(snapcraftctl --version)"
       # snapcraftctl --debug set-version "$ver"
       snapcraftctl --debug set-version "$ver"
       snapcraftctl --debug set-grade "devel"
