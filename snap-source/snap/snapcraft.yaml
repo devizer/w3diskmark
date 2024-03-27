@@ -41,4 +41,7 @@ apps:
     refresh-mode: restart
     restart-condition: on-failure
     restart-delay: 10s
+    plugs: 
+      - network
+      - network-bind
 
