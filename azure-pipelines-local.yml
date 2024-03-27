@@ -1,0 +1,73 @@
+variables:
+  THEWORKDIR: /transient-builds
+  DEFAULT_NEWSIZE: 16G
+  XZ_COMPRESSION_LEVEL: 9
+
+jobs:
+
+- job: Snapping
+  pool:
+    vmImage: 'ubuntu-22.04'
+  timeoutInMinutes: 120
+
+  steps:
+  - script: |
+      set -eu; set -o pipefail
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      Say --Reset-Stopwatch
+      echo "CPU: $(Get-CpuName)"
+      printenv | sort;
+    displayName: 'Variables'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      sudo apt-get update -qq
+    displayName: 'Provisioning'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
+      bash -e download-binaries.sh
+      bash -e build-snap.sh
+    displayName: 'Build'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
+
+      snap install w3diskmark*.snap --devmode
+      sudo snap set w3diskmark http.port=5555
+      bash -c w3diskmark &
+      sleep 10
+    displayName: 'Smoke Test'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
+
+      for f in *.snap; do
+        cat $f | xz -z -9 -e > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
+      done
+    # condition: succeededOrFailed()
+    displayName: 'Compress artifact image'
+
+  - task: PublishBuildArtifacts@1
+    condition: succeeded()
+    displayName: 'Publish Final'
+    inputs:
+      pathtoPublish: '$(System.ARTIFACTSDIRECTORY)'
+      artifactName: 'Succeeded $(Agent.JobName)'
+
+  - task: PublishBuildArtifacts@1
+    condition: failed()
+    displayName: 'Publish Errors'
+    inputs:
+      pathtoPublish: '$(System.ARTIFACTSDIRECTORY)'
+      artifactName: 'Failed $(Agent.JobName)-$(Build.BUILDNUMBER)'

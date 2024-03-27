@@ -1,0 +1,38 @@
+name: w3diskmark
+base: core20
+version: 'vFake'
+summary: Cross-Platform Disk Benchmark
+grade: devel
+confinement: devmode
+description: |
+  w3diskmark is backed by fio, provides rich Material based UI using built-in http server, supports wide range of browsers and linux distributions.
+
+parts:
+  w3diskmark:
+    override-pull: |
+      set -eux
+      snapcraftctl --debug pull
+      ver="$(cat VERSION)"
+      echo "VERSION IS [$ver] (2.41+)"
+      echo "snapcraftctl version is $(snapcraftctl --version)"
+      # snapcraftctl --debug set-version "$ver"
+      snapcraftctl --debug set-version 2.3.4.5
+      snapcraftctl --debug set-grade "devel"
+      echo "KERNEL IS $(uname -r)"
+    plugin: dump
+    source:
+      - to amd64: ./bin-x64/
+      - to arm64: ./bin-arm64/
+      - to armhf: ./bin-arm/
+    stage-packages:
+      - ca-certificates
+      # - libicu60
+      # - libssl1.1
+      - liblttng-ust0
+      # - fio
+
+      # curl ca-certificates libkrb5-3 zlib1g libicu60 libssl1.0.0 libssl1.1 libunwind8 libuuid1 liblttng-ust0
+
+apps:
+  w3diskmark:
+    command: w3diskmark

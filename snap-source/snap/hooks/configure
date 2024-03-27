@@ -1,0 +1,16 @@
+#!/bin/bash -eu
+
+HTTP_PORT="$(snapctl get http.port)"
+HTTP_HOST="$(snapctl get http.host)"
+RESPONSE_COMPRESSION="$(snapctl get http.compression)"
+DUMPS_ARE_ENABLED="$(snapctl get debug)"
+
+mkdir -p -m 0600 $SNAP_DATA/options
+
+echo '
+export HTTP_PORT='"'"$HTTP_PORT"'"'
+export HTTP_HOST='"'"$HTTP_HOST"'"'
+export RESPONSE_COMPRESSION='"'"$RESPONSE_COMPRESSION"'"'
+export DUMPS_ARE_ENABLED='"'"$DUMPS_ARE_ENABLED"'"'
+' > $SNAP_DATA/options/variables
+
