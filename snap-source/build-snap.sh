@@ -9,6 +9,7 @@ rm -f w3diskmark*.snap || true
 snapcraft clean; 
 lxd init --auto || true
 sudo lxd init --auto || true
+time sudo lxc launch ubuntu:22.04
 sudo apt-get install liblttng-ust0 fio -y -q
 time sudo snapcraft --destructive-mode --debug
 # time sudo snapcraft clean 
