@@ -13,7 +13,7 @@ rm -f w3diskmark*.snap || true
 My-Eval sudo snap install strace-static
 My-Eval snapcraft clean  || true
 My-Eval sudo apt-get install liblttng-ust0 fio -y -q || true # missing in 22.04
-My-Eval sudo snapcraft --strace=--raw --destructive-mode --debug
+My-Eval sudo snapcraft --strace --destructive-mode --debug
 Say "Success"
 exit 0
 
