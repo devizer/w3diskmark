@@ -23,7 +23,7 @@ jobs:
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       sudo apt-get update -qq
-      time sudo snap install multipass
+      # time sudo snap install multipass
       time sudo snap install snapcraft --channel=8.x/stable --classic
     displayName: 'Provisioning'
 
