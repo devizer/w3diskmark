@@ -16,7 +16,7 @@ parts:
       echo "VERSION IS [$ver] (2.41+)"
       echo "snapcraftctl version is $(snapcraftctl --version)"
       # snapcraftctl --debug set-version "$ver"
-      snapcraftctl --debug set-version 2.3.4.5
+      snapcraftctl --debug set-version "$ver"
       snapcraftctl --debug set-grade "devel"
       echo "KERNEL IS $(uname -r)"
     plugin: dump

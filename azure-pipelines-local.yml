@@ -46,6 +46,8 @@ jobs:
       time sudo snap set w3diskmark http.port=5555
       bash -c w3diskmark &
       sleep 10
+      Say "PROCESSES"
+      sudo ps -aux | grep Universe
       curl -I http://localhost:5555
     displayName: 'Smoke Test'
 
