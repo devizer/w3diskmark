@@ -1,5 +1,5 @@
 name: w3diskmark
-base: core22
+base: core20
 version: 'vFake'
 summary: Cross-Platform Disk Benchmark
 grade: devel

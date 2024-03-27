@@ -11,13 +11,14 @@ pkill w3diskmark || true
 My-Eval sudo snap remove --purge w3diskmark || true
 rm -f w3diskmark*.snap || true
 
+My-Eval sudo snap install lxd || true
 My-Eval lxd init --auto || true
 My-Eval sudo lxd init --auto || true
 My-Eval sudo lxc launch ubuntu:22.04
 
 
 My-Eval sudo snap install strace-static
-My-Eval snapcraft clean  || true
+My-Eval snapcraft clean --destructive-mode || true
 My-Eval sudo apt-get install liblttng-ust0 fio -y -q || true # missing in 22.04
 My-Eval sudo snapcraft --strace --destructive-mode --debug
 Say "Success"
