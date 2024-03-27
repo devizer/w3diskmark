@@ -56,7 +56,7 @@ jobs:
 
       cd snap-source
 
-      for f in *.snap; do
+      for f in $(ls -1 *.snap); do
         # cat $f | xz -z -1 > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
         cp -v $f $SYSTEM_ARTIFACTSDIRECTORY/
       done

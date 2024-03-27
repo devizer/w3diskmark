@@ -7,6 +7,8 @@ pkill w3diskmark || true
 sudo snap remove --purge w3diskmark || true
 rm -f w3diskmark*.snap || true
 snapcraft clean; 
+lxd init --auto || true
+sudo lxd init --auto || true
 sudo apt-get install liblttng-ust0 fio -y -q
 time sudo snapcraft --destructive-mode --debug
 # time sudo snapcraft clean 
