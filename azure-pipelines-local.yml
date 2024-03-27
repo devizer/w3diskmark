@@ -48,6 +48,8 @@ jobs:
       sleep 10
       Say "PROCESSES"
       sudo ps -aux | grep Universe
+      Say "SNAP SERVICES"
+      sudo snap services
       curl -I http://localhost:5555
     displayName: 'Smoke Test'
 
