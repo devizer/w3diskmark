@@ -11,6 +11,7 @@ parts:
   w3diskmark:
     override-pull: |
       set -eux
+      echo "SNAPCRAFT_TARGET_ARCH: $SNAPCRAFT_TARGET_ARCH"
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       snapcraftctl pull
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
