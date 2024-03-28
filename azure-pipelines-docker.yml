@@ -29,6 +29,16 @@ jobs:
 
   - script: |
       set -eu; set -o pipefail
+      work=$HOME/build/snapcraft-in-container
+      mkdir -p $work
+      pushd $work
+      try-and-retry curl -ksfSL -o Dockerfile https://raw.githubusercontent.com/canonical/snapcraft/main/docker/Dockerfile
+      time docker build . -t snapcraft-bionic --no-cache --build-arg RISK=stable --build-arg UBUNTU=bionic
+      docker image ls
+    displayName: 'Build snapcraft-bionic image'
+
+  - script: |
+      set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
       cd snap-source
