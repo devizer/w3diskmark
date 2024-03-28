@@ -12,15 +12,15 @@ parts:
     override-pull: |
       set -eux
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
-      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
       arch="$SNAPCRAFT_TARGET_ARCH";
       if [[ "$arch" == "amd64" ]]; then arch=x64; elif [[ "$arch" == "armhf" ]]; then arch=arm; fi
-      url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.xz"
+      url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.gz"
       copy="$(mktemp -t w3top-$arch.XXXXXXXXX)"
       echo "Downloading [$url] for the [$SNAPCRAFT_TARGET_ARCH] arch as [$copy]"
       try-and-retry curl -ksfSL -o "$copy" "$url"
       pushd "$SNAPCRAFT_PART_SRC"
-        tar xJf "$copy"
+        tar xzf "$copy"
         rm -f "$copy"
         try-and-retry curl -ksfSL -o ./w3diskmark "https://raw.githubusercontent.com/devizer/w3diskmark/main/snap-source/w3diskmark"
         chmod +x ./w3diskmark
