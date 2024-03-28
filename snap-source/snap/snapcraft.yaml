@@ -11,7 +11,9 @@ parts:
   w3diskmark:
     override-pull: |
       set -eux
+      echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       snapcraftctl pull
+      echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
       snapcraftctl --debug set-version "$ver"
