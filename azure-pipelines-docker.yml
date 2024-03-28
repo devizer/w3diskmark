@@ -40,7 +40,7 @@ jobs:
       docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro $image
 
       # make sure SystemD is completely loaded, usually it takes about 1 second
-      wait_for_systemd="printf 'Wait for systemd on ubuntu "$ver" '; ok=''; for i in {1..9}; do pgrep systemd-journal >/dev/null && ok='true' && echo ' OK' && break || printf '.'; sleep 1; done; [ -z \$ok ] && echo ' Fail';"
+      wait_for_systemd="printf 'Wait for systemd on ubuntu "$UBUNTU_VER" '; ok=''; for i in {1..9}; do pgrep systemd-journal >/dev/null && ok='true' && echo ' OK' && break || printf '.'; sleep 1; done; [ -z \$ok ] && echo ' Fail';"
       docker exec -t w3diskmak-builder bash -c "$wait_for_systemd"; 
 
       # last, SystemD initialization is completed and we can install, start, check the status and read logs of a SystemD service
