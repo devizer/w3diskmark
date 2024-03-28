@@ -5,7 +5,7 @@ summary: Cross-Platform Disk Benchmark
 grade: devel
 epoch: 1
 # Strict: Access to the path '/proc/mounts' is denied.
-confinement: classic
+confinement: devmode
 description: |
   w3diskmark is backed by fio, provides rich Material based UI using built-in http server, supports wide range of browsers and linux distributions.
 
