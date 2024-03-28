@@ -1,4 +1,4 @@
-﻿set -eu
+set -eu
 function My-Eval() {
     Say "[🠊] $*"
     time eval "$@"
