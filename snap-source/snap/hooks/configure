@@ -9,12 +9,12 @@ echo "[Snap Configure Hook] Variables"
 printenv | sort | grep "SNAP"
 
 # Actually the file below is ignored and launcher uses `snapctl get` directly
-mkdir -p -m 0600 $SNAP_DATA/options
+# mkdir -p -m 0600 $SNAP_DATA/options
 
 echo '
 export HTTP_PORT='"'"$HTTP_PORT"'"'
 export HTTP_HOST='"'"$HTTP_HOST"'"'
 export RESPONSE_COMPRESSION='"'"$RESPONSE_COMPRESSION"'"'
 export DUMPS_ARE_ENABLED='"'"$DUMPS_ARE_ENABLED"'"'
-' > $SNAP_DATA/options/variables
+' > $SNAP_DATA/configuration
 

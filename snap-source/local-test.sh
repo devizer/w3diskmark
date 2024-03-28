@@ -5,5 +5,5 @@ cd $work
 git pull
 cd snap-source; 
 if [[ ! -d bin-x64 ]]; then bash -e download-binaries.sh || rm -rf bin-a*; fi
-bash -e build-snap.sh;
+time bash -e build-snap.sh;
 
