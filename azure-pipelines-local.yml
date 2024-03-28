@@ -32,7 +32,7 @@ jobs:
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
       cd snap-source
-      # bash -e download-binaries.sh
+      bash -e download-binaries.sh # need for VERSION file only
       bash -e build-snap.sh
     displayName: 'Build'
 
