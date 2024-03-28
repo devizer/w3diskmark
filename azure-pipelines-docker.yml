@@ -1,0 +1,101 @@
+variables:
+  THEWORKDIR: /transient-builds
+  DEFAULT_NEWSIZE: 16G
+  XZ_COMPRESSION_LEVEL: 9
+
+jobs:
+
+- job: Snapping
+  pool:
+    vmImage: 'ubuntu-20.04'
+  timeoutInMinutes: 120
+
+  steps:
+  - script: |
+      set -eu; set -o pipefail
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      Say --Reset-Stopwatch
+      echo "CPU: $(Get-CpuName)"
+      printenv | sort;
+    displayName: 'Variables'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      sudo apt-get update -qq
+      # time sudo snap install multipass
+      time sudo snap install snapcraft --channel=8.x/stable --classic
+    displayName: 'Provisioning'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
+      sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
+      docker exec -t w3diskmak-builder bash -c 'set -eu; set -o pipefail
+         script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+         cd /builder
+         apt-get update -qq; apt-get install curl snapcraft xz-utils sudo -y -qq;
+         bash -e download-binaries.sh # need for VERSION file only
+         bash -e build-snap.sh
+      '
+    displayName: 'Build in Docker'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
+
+      time sudo snap install w3diskmark*.snap --devmode
+      time sudo snap set w3diskmark http.port=5555
+      time sudo snap restart w3diskmark 
+      # bash -c w3diskmark &
+      sleep 10
+      Say "ALL THE PROCESSES"
+      sudo ps -aux
+      Say "SNAP PROCESSES"
+      sudo ps -aux | grep Universe
+      Say "SNAP SERVICES"
+      sudo snap services
+      curl -I http://localhost:5555
+    displayName: 'Smoke Test'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      time sudo snap logs -n=all w3diskmark.service |& tee $SYSTEM_ARTIFACTSDIRECTORY/w3diskmark.service.log
+    displayName: 'Snap Daemon Logs'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      sudo chown -R $USER $HOME
+      find $HOME -name '*.log' -exec cp -v -f {} $SYSTEM_ARTIFACTSDIRECTORY \;
+
+      cd snap-source
+
+      for f in $(ls -1 *.snap); do
+        # cat $f | xz -z -1 > $SYSTEM_ARTIFACTSDIRECTORY/$f.xz
+        cp -v $f $SYSTEM_ARTIFACTSDIRECTORY/
+      done
+
+
+    condition: succeededOrFailed()
+    displayName: 'Compress artifact image'
+
+  - task: PublishBuildArtifacts@1
+    condition: succeeded()
+    displayName: 'Publish Final'
+    inputs:
+      pathtoPublish: '$(System.ARTIFACTSDIRECTORY)'
+      artifactName: 'Succeeded $(Agent.JobName)'
+
+  - task: PublishBuildArtifacts@1
+    condition: failed()
+    displayName: 'Publish Errors'
+    inputs:
+      pathtoPublish: '$(System.ARTIFACTSDIRECTORY)'
+      artifactName: 'Failed $(Agent.JobName)-$(Build.BUILDNUMBER)'
