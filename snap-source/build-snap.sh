@@ -21,7 +21,7 @@ rm -f w3diskmark*.snap || true
 My-Eval snapcraft clean --destructive-mode || true
 My-Eval sudo apt-get install liblttng-ust0 fio -y -q | grep "Unpack\|Setting" || true # missing in 22.04
 
-if [[ "${AGENT_NAME:-}" == "Hosted Agent" ]]; then mode="--destructive-mode"; else mode=""; fi
+if [[ "${AGENT_NAME:-}" == "Hosted Agent" ]] || [[ "${AGENT_NAME:-}" == "Azure Pipelines"* ]]; then mode="--destructive-mode"; else mode=""; fi
 My-Eval sudo snapcraft $mode --debug
 sudo ls -lah *.snap
 Say "Success"
