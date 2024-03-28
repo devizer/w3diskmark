@@ -34,7 +34,10 @@ jobs:
       cd snap-source
 
       UBUNTU_VER=20.04
-      docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro devizervlad/systemd-on-ubuntu:${UBUNTU_VER}
+      image=devizervlad/systemd-on-ubuntu:${UBUNTU_VER}
+      try-and-retry docker pull -q $image
+      Say "Starting container from $image"
+      docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro $image
 
       # make sure SystemD is completely loaded, usually it takes about 1 second
       wait_for_systemd="printf 'Wait for systemd on ubuntu "$ver" '; ok=''; for i in {1..9}; do pgrep systemd-journal >/dev/null && ok='true' && echo ' OK' && break || printf '.'; sleep 1; done; [ -z \$ok ] && echo ' Fail';"
