@@ -19,6 +19,7 @@ parts:
       snapcraftctl --debug set-version "$ver"
       snapcraftctl --debug set-grade "devel"
       echo "KERNEL IS $(uname -r)"
+      printenv | sort | grep "SNAP\|SNAPCRAFT" || true
     plugin: dump
     source:
       - to amd64: ./bin-x64/
