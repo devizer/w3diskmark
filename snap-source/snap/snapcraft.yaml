@@ -1,9 +1,9 @@
 name: w3diskmark
 base: core20
-version: 'vFake'
+version: '0.1'
 summary: Cross-Platform Disk Benchmark
 grade: devel
-confinement: devmode
+confinement: strict
 description: |
   w3diskmark is backed by fio, provides rich Material based UI using built-in http server, supports wide range of browsers and linux distributions.
 
