@@ -33,8 +33,11 @@ jobs:
       mkdir -p $work
       pushd $work
       try-and-retry curl -ksfSL -o Dockerfile https://raw.githubusercontent.com/canonical/snapcraft/main/docker/Dockerfile
-      time docker build . -t snapcraft-bionic --no-cache --build-arg RISK=stable --build-arg UBUNTU=bionic
+      time docker build . -t snapcraft-bionic -t snapcraft-image --no-cache --build-arg RISK=stable --build-arg UBUNTU=bionic
+      Say "IMAGES"
       docker image ls
+      Say "SNAPCRAFT VERSION"
+      docker run -v "$PWD":/build -w /build snapcraft-bionic snapcraft --version
     displayName: 'Build snapcraft-bionic image'
 
   - script: |
