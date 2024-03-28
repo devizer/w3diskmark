@@ -1,5 +1,5 @@
 set -eu; set -o pipefail
-work=$HOME/build/w3diskmark
+work=$HOME/build/w3diskmark-local
 if [[ ! -d $work ]]; then git clone https://github.com/devizer/w3diskmark $work; fi
 cd $work
 git pull

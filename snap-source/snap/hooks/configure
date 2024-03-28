@@ -5,6 +5,9 @@ HTTP_HOST="$(snapctl get http.host)"
 RESPONSE_COMPRESSION="$(snapctl get http.compression)"
 DUMPS_ARE_ENABLED="$(snapctl get debug)"
 
+echo "[Snap Configure Hook] Variables"
+printenv | sort | grep "SNAP"
+
 # Actually the file below is ignored and launcher uses `snapctl get` directly
 mkdir -p -m 0600 $SNAP_DATA/options
 
