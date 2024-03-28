@@ -11,20 +11,26 @@ parts:
   w3diskmark:
     override-pull: |
       set -eux
-      wget --version | head -1 || true
-      curl --version | head -1 || true
-      echo "SNAPCRAFT_TARGET_ARCH: [$SNAPCRAFT_TARGET_ARCH], DIR: [$(pwd)]"
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
-      snapcraftctl pull
+      script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash
+      arch="$SNAPCRAFT_TARGET_ARCH";
+      if [[ "$arch" == "amd64" ]]; then arch=x64; elif [[ "$arch" == "armhf" ]]; then arch=arm; fi
+      url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.xz"
+      echo "Downloading [$url] for the [$SNAPCRAFT_TARGET_ARCH] arch"
+      try-and-retry curl -ksfSL -o /tmp/w3diskmark-$arch.tar.xz "$url"
+      pushd "$SNAPCRAFT_PART_SRC"
+        tar xJf /tmp/w3diskmark-$arch.tar.xz
+        rm -f /tmp/w3diskmark-$arch.tar.xz
+      popd
+      # SKIP: snapcraftctl pull
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
-      snapcraftctl --debug set-version "$ver"
+      snapcraftctl set-version "$ver"
       echo "KERNEL IS $(uname -r)"
       printenv | sort | grep "SNAP\|SNAPCRAFT" || true
-      xz --version
     plugin: dump
-    source:
+    source: # pull ignored
       - to amd64: ./bin-x64/
       - to arm64: ./bin-arm64/
       - to armhf: ./bin-arm/
