@@ -11,13 +11,10 @@ parts:
   w3diskmark:
     override-pull: |
       set -eux
-      snapcraftctl --debug pull
+      snapcraftctl pull
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
-      # echo "snapcraftctl version is $(snapcraftctl --version)"
-      # snapcraftctl --debug set-version "$ver"
       snapcraftctl --debug set-version "$ver"
-      snapcraftctl --debug set-grade "devel"
       echo "KERNEL IS $(uname -r)"
       printenv | sort | grep "SNAP\|SNAPCRAFT" || true
     plugin: dump
