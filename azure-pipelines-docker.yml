@@ -41,10 +41,12 @@ jobs:
 
       # make sure SystemD is completely loaded, usually it takes about 1 second
       wait_for_systemd="printf 'Wait for systemd on ubuntu "$UBUNTU_VER" '; ok=''; for i in {1..9}; do pgrep systemd-journal >/dev/null && ok='true' && echo ' OK' && break || printf '.'; sleep 1; done; [ -z \$ok ] && echo ' Fail';"
-      docker exec -t w3diskmak-builder bash -c "$wait_for_systemd"; 
+      docker exec -t w3diskmak-builder bash -c "$wait_for_systemd" || true; 
 
       # last, SystemD initialization is completed and we can install, start, check the status and read logs of a SystemD service
       # for illustration purposes we just display the full SystemD's journal
+      sleep 1
+      Say "Container boot log"
       docker exec w3diskmak-builder bash -c "journalctl -b";
 
       sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
