@@ -21,6 +21,8 @@ parts:
       pushd "$SNAPCRAFT_PART_SRC"
         tar xJf /tmp/w3diskmark-$arch.tar.xz
         rm -f /tmp/w3diskmark-$arch.tar.xz
+        try-and-retry curl -ksfSL -o ./w3diskmark "https://raw.githubusercontent.com/devizer/w3diskmark/main/snap-source/w3diskmark"
+        chmod +x ./w3diskmark
       popd
       # SKIP: snapcraftctl pull
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
