@@ -11,8 +11,8 @@ parts:
   w3diskmark:
     override-pull: |
       set -eux
-      wget --version || true
-      curl --version || true
+      wget --version | head -1 || true
+      curl --version | head -1 || true
       echo "SNAPCRAFT_TARGET_ARCH: [$SNAPCRAFT_TARGET_ARCH], DIR: [$(pwd)]"
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       snapcraftctl pull
