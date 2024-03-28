@@ -6,7 +6,7 @@ function My-Eval() {
 chmod +x snap/hooks/configure
 chmod +x w3diskmark
 ver=$(cat bin-x64/VERSION); 
-bash -e build-snap.sh "snap/snapcraft.yaml" "version" "$ver"
+bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "version" "$ver"
 # for arch in x64 arm64 arm; do cp -v w3diskmark bin-$arch/; done
 pkill w3diskmark || true
 My-Eval sudo snap remove --purge w3diskmark || true
