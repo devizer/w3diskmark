@@ -16,11 +16,12 @@ parts:
       arch="$SNAPCRAFT_TARGET_ARCH";
       if [[ "$arch" == "amd64" ]]; then arch=x64; elif [[ "$arch" == "armhf" ]]; then arch=arm; fi
       url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.xz"
-      echo "Downloading [$url] for the [$SNAPCRAFT_TARGET_ARCH] arch"
-      try-and-retry curl -ksfSL -o /tmp/w3diskmark-$arch.tar.xz "$url"
+      copy="$(mktemp -t w3top-$arch.XXXXXXXXX)"
+      echo "Downloading [$url] for the [$SNAPCRAFT_TARGET_ARCH] arch as [$copy]"
+      try-and-retry curl -ksfSL -o "$copy" "$url"
       pushd "$SNAPCRAFT_PART_SRC"
-        tar xJf /tmp/w3diskmark-$arch.tar.xz
-        rm -f /tmp/w3diskmark-$arch.tar.xz
+        tar xJf "$copy"
+        rm -f "$copy"
         try-and-retry curl -ksfSL -o ./w3diskmark "https://raw.githubusercontent.com/devizer/w3diskmark/main/snap-source/w3diskmark"
         chmod +x ./w3diskmark
       popd
