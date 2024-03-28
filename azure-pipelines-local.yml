@@ -42,7 +42,7 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
 
-      time sudo snap install w3diskmark*.snap --devmode
+      time sudo snap install w3diskmark*.snap --devmode --classic
       time sudo snap set w3diskmark http.port=5555
       time sudo snap restart w3diskmark 
       # bash -c w3diskmark &
