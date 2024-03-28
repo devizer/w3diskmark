@@ -13,7 +13,7 @@ parts:
       set -eux
       wget --version || true
       curl --version || true
-      echo "SNAPCRAFT_TARGET_ARCH: $SNAPCRAFT_TARGET_ARCH"
+      echo "SNAPCRAFT_TARGET_ARCH: [$SNAPCRAFT_TARGET_ARCH], DIR: [$(pwd)]"
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       snapcraftctl pull
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")

@@ -18,7 +18,7 @@ rm -f w3diskmark*.snap || true
 # My-Eval sudo lxc launch ubuntu:22.04
 
 My-Eval snapcraft clean --destructive-mode || true
-My-Eval sudo apt-get install liblttng-ust0 fio -y -q || true # missing in 22.04
+My-Eval sudo apt-get install liblttng-ust0 fio -y -q | grep "Unpack\|Setting" || true # missing in 22.04
 My-Eval sudo snapcraft --destructive-mode --debug
 sudo ls -lah *.snap
 Say "Success"
