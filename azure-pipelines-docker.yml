@@ -49,7 +49,7 @@ jobs:
       Say "Container boot log"
       docker exec w3diskmak-builder bash -c "journalctl -b";
 
-      sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
+      # sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
       docker exec -t w3diskmak-builder bash -c 'set -eu; set -o pipefail
          cd /builder
          apt-get update -qq; apt-get install curl snapcraft xz-utils sudo -y -qq | grep "Setting\|Unpack";
