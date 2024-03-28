@@ -34,9 +34,9 @@ jobs:
       cd snap-source
       sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
       docker exec -t w3diskmak-builder bash -c 'set -eu; set -o pipefail
-         script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
          cd /builder
-         apt-get update -qq; apt-get install curl snapcraft xz-utils sudo -y -qq;
+         apt-get update -qq; apt-get install curl snapcraft xz-utils sudo -y -qq | grep "Setting\|Unpack";
+         script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
          bash -e download-binaries.sh # need for VERSION file only
          bash -e build-snap.sh
       '
