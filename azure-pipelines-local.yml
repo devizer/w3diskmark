@@ -51,8 +51,9 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
 
-      classicArg=""; test "$CONFINEMENT" = "classic" && classicArg="--classic"
-      time sudo snap install w3diskmark*.snap --devmode $classicArg
+      classicArg="--devmode"; test "$CONFINEMENT" = "classic" && classicArg="--dangerous --classic"
+      Say "INSTALL ARGUMENTS: [$classicArg]"
+      time sudo snap install w3diskmark*.snap $classicArg
       time sudo snap set w3diskmark http.port=5555
       time sudo snap restart w3diskmark 
       # bash -c w3diskmark &
