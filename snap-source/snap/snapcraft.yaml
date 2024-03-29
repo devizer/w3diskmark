@@ -56,7 +56,7 @@ apps:
     install-mode: enable
     refresh-mode: restart
     restart-condition: on-failure
-    restart-delay: 10s
+    restart-delay: 20s
     plugs: 
       - network
       - network-bind
