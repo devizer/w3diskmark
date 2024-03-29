@@ -60,4 +60,22 @@ apps:
     plugs: 
       - network
       - network-bind
+      - hardware-observe
+      - cpu-control
+      - cifs-mount
+      - block-devices
+      - mount-observe
+      - network-manager-observe
+      - network-observe
+      - optical-drive
+      - physical-memory-observe
+      - raw-usb
+      - raw-volume
+      - removable-media
+      - scsi-generic
+      - sd-control
+      - system-observe
+      - upower-observe
+      
+
 
