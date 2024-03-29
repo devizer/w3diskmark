@@ -69,6 +69,10 @@ jobs:
         Say "Restart w3diskmark [$i]"
         port=$((i+5555))
         time sudo snap set w3diskmark http.port=5555
+        sudo rm -rf "/root/snap/w3diskmark/common"/*
+        sudo rm -rf "/root/snap/w3diskmark/~current"/*
+        sudo rm -rf "/var/snap/w3diskmark/common"/*
+        sudo rm -rf "/var/snap/w3diskmark/~current"/*
         time sudo snap restart w3diskmark 
       done
     displayName: 'Smoke Test'

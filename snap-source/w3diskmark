@@ -4,6 +4,20 @@ set -e
 set -u
 pushd `dirname $0` > /dev/null; ScriptPath=`pwd`; popd > /dev/null
 
+
+if [[ "${1:-}" == "--flush-state" ]]; then
+  if [[ -z "${SNAP_DATA:-}" ]] || [[ -z "${SNAP_USER_DATA:-}" ]]; then
+    echo "Flush state is not available outside of snap";
+    exit 0;
+  fi
+  sizeSystem="$(du -h --max-depth 0 "$SNAP_DATA" | awk '{print $1}')"
+  sizeUser="$(du -h --max-depth 0 "$SNAP_USER_DATA" | awk '{print $1}')"
+  echo "Flush state at $SNAP_DATA ($sizeSystem) and $SNAP_USER_DATA ($sizeUser)"
+  rm -rf $SNAP_DATA/*;
+  rm -rf $SNAP_USER_DATA/*;
+  exit 0
+fi
+
 if [[ "${1:-}" == "--vars" ]]; then
   echo "VARS. w3diskmark version $("$ScriptPath/Universe.W3Top" --version)"
   echo "____"
