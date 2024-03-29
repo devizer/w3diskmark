@@ -67,7 +67,7 @@ jobs:
       curl -I http://localhost:5555
       for ((i=1; i<=12; i++)); do
         Say "Restart w3diskmark [$i]"
-        port=((i+5555))
+        port=$((i+5555))
         time sudo snap set w3diskmark http.port=5555
         time sudo snap restart w3diskmark 
       done
