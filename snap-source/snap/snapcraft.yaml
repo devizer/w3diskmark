@@ -52,6 +52,7 @@ apps:
   service:
     command: ./w3diskmark
     daemon: simple
+    stopmode: sigint
     install-mode: enable
     refresh-mode: restart
     restart-condition: on-failure
