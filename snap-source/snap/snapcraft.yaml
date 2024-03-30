@@ -52,7 +52,7 @@ apps:
   service:
     command: ./w3diskmark
     daemon: simple
-    stop-mode: sigint
+    stop-mode: sigint-all
     install-mode: enable
     refresh-mode: restart
     restart-condition: on-failure
@@ -76,6 +76,6 @@ apps:
       - sd-control
       - system-observe
       - upower-observe
-      
+
 
 
