@@ -66,14 +66,14 @@ jobs:
       sudo snap services
       curl -I http://localhost:5555
       for ((i=1; i<=12; i++)); do
-        Say "Restart w3diskmark [$i]"
+        # Say "Restart w3diskmark [$i]"
         port=$((i+5555))
         time sudo snap set w3diskmark http.port=5555
         sudo rm -rf "/root/snap/w3diskmark/common"/*
         sudo rm -rf "/root/snap/w3diskmark/~current"/*
         sudo rm -rf "/var/snap/w3diskmark/common"/*
         sudo rm -rf "/var/snap/w3diskmark/~current"/*
-        time sudo snap restart w3diskmark 
+        time sudo snap restart w3diskmark && Say "Success Restart w3diskmark [$i]" || Say --Display-As=Error "Failed Restart w3diskmark [$i]"
       done
     displayName: 'Smoke Test'
 
@@ -81,6 +81,7 @@ jobs:
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       time sudo snap logs -n=all w3diskmark.service |& tee $SYSTEM_ARTIFACTSDIRECTORY/w3diskmark.service.log
+    condition: succeededOrFailed()      
     displayName: 'Snap Daemon Logs'
 
   - script: |
