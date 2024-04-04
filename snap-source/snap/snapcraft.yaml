@@ -31,6 +31,7 @@ parts:
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
+      # invalid control API call: variable 'version' can only be set in a part that adopts external metadata.
       snapcraftctl set-version "$ver"
       echo "KERNEL IS $(uname -r)"
       printenv | sort | grep "SNAP\|SNAPCRAFT" || true

@@ -7,16 +7,24 @@ jobs:
 
 - job: Snapping
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: '$(PIPELINEIMAGE)'
   timeoutInMinutes: 120
   strategy:
     maxParallel: 2
     matrix:
       
-      'classic':
+      'classic 20.04':
         confinement: classic
-      'strict':
+        PIPELINEIMAGE: ubuntu-20.04
+      'strict 20.04':
         confinement: strict
+        PIPELINEIMAGE: ubuntu-20.04
+      'classic 22.04':
+        confinement: classic
+        PIPELINEIMAGE: ubuntu-22.04
+      'strict 22.04':
+        confinement: strict
+        PIPELINEIMAGE: ubuntu-22.04
 
   steps:
   - script: |

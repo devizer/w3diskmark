@@ -7,6 +7,10 @@ chmod +x snap/hooks/configure
 chmod +x w3diskmark
 ver=$(cat bin-x64/VERSION); 
 bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "version" "$ver"
+
+majorUbuntuVersion="$(source /etc/os-release; echo $VERSION_ID | awk -F'.' '{print $1}')"
+bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${majorUbuntuVersion}"
+
 # for arch in x64 arm64 arm; do cp -v w3diskmark bin-$arch/; done
 pkill w3diskmark || true
 My-Eval sudo snap remove --purge w3diskmark || true
