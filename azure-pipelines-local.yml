@@ -10,7 +10,7 @@ jobs:
     vmImage: '$(PIPELINEIMAGE)'
   timeoutInMinutes: 120
   strategy:
-    maxParallel: 2
+    maxParallel: 4
     matrix:
       
       'classic 20.04':
