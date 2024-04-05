@@ -54,21 +54,14 @@ jobs:
   - script: |
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
-      # Ver 2: custom
       pushd Snapcraft-In-Docker
       time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=${SNAPIMAGE} # bionic
       popd
 
-      # Ver 1: as is
-      # work=$HOME/build/snapcraft-in-container
-      # mkdir -p $work
-      # pushd $work
-      # try-and-retry curl -ksfSL -o Dockerfile https://raw.githubusercontent.com/canonical/snapcraft/main/docker/Dockerfile
-      # time docker build . -t snapcraft-xenial -t snapcraft-image --no-cache --build-arg RISK=stable --build-arg UBUNTU=xenial # bionic
       Say "IMAGES"
       docker image ls
       Say "SNAPCRAFT VERSION"
-      docker run -v "$PWD":/build -w /build snapcraft-image snapcraft --version
+      docker run --rm -t -v "$PWD":/build -w /build snapcraft-image snapcraft --version
     displayName: 'Build snapcraft image'
 
   - script: |
@@ -82,6 +75,7 @@ jobs:
       chmod +x w3diskmark
       ver=$(cat bin-x64/VERSION); 
       bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "version" "$ver"
+      bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "confinement" "$CONFINEMENT"
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
       ls -lah
@@ -126,7 +120,9 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
 
-      time sudo snap install w3diskmark*.snap --devmode
+      classicArg="--devmode"; test "$CONFINEMENT" = "classic" && classicArg="--dangerous --classic"
+      Say "INSTALL ARGUMENTS: [$classicArg]"
+      time sudo snap install w3diskmark*.snap $classicArg
       time sudo snap set w3diskmark http.port=5555
       time sudo snap restart w3diskmark 
       # bash -c w3diskmark &
