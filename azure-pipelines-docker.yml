@@ -52,6 +52,7 @@ jobs:
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
       cd snap-source
+      bash -e download-binaries.sh
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
 
