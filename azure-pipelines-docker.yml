@@ -10,9 +10,22 @@ jobs:
     vmImage: '$(PIPELINEIMAGE)'
   timeoutInMinutes: 120
   strategy:
-    maxParallel: 4
+    maxParallel: 6
     matrix:
       
+      'classic 16.04':
+        CONFINEMENT: classic
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 16.04
+        BASECORE: ''
+        SNAPCRAFTVER: 7.x/stable
+      'strict 16.04':
+        CONFINEMENT: strict
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 16.04
+        BASECORE: ''
+        SNAPCRAFTVER: 7.x/stable
+
       'classic 18.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
