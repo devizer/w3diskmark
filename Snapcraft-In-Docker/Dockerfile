@@ -7,7 +7,7 @@ ARG UBUNTU
 RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 
 RUN set -eu; \
-  function try_and_retry() { eval "$@" || eval "$@" || eval "$@"; }; \
+  function try_and_retry { eval "$@" || eval "$@" || eval "$@"; }; \
   try_and_retry apt-get update -q; \
   try_and_retry apt-get install -y -q curl; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
