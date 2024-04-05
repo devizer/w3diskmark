@@ -52,7 +52,7 @@ jobs:
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
       cd snap-source
-      docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
+      docker run --privileged -t -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
 
     displayName: 'Build in Docker'
