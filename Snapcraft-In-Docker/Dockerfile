@@ -9,12 +9,12 @@ RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 RUN set -eu; \
   EchoRedError() { ANSI_RED='\033[0;31m'; ANSI_RESET='\033[0m'; if [ -z "$BASH_VERSION" ]; then echo "\n${ANSI_RED}$*${ANSI_RESET}\n" >&2; else echo -e "\n${ANSI_RED}$*${ANSI_RESET}\n" >&2; fi; }; \
   RetryOnFail() { "$@" && return; EchoRedError "Retrying 2 of 3 for '$*'"; sleep 1; "$@" && return; EchoRedError "Retrying 3 of 3 for '$*'"; sleep 1; "$@"; }; \
-  RetryOnFail apt-get update -q; \
-  RetryOnFail apt-get install -y -q curl; \
-  script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
+  RetryOnFail apt-get update -qq; \
+  RetryOnFail sh -c "apt-get install -y -q curl | grep 'Unpack\|Setting'"; \
+  script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null; \
   Say --Reset-Stopwatch; \
   Say "apt-get install jq squashfs-tools snapd locales ..."; \
-  try-and-retry apt-get install -y -q sudo jq squashfs-tools snapd locales; \
+  try-and-retry sh -c "apt-get install -y -q sudo jq squashfs-tools snapd locales | grep 'Unpack\|Setting'"; \
   arch="$(dpkg --print-architecture)"; \
   for snap in core core18 core20 core22 snapcraft; do \
     Say "DOWNLOADING SNAP=[$snap] for arch=[$arch]"; \
@@ -28,7 +28,7 @@ RUN set -eu; \
     unsquashfs -d /snap/$snap/current $snap.snap; \
     rm -rf $snap.snap; \
   done; \
-  Say "FINISH"; \
+  Say "FINISH DOWNLOAD. Link snapcraft to proper python"; \
   apt-get clean; rm -rf /var/cache/apt/* /tmp/* /var/tmp/*
 
 
