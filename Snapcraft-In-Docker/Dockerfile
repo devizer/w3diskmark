@@ -12,7 +12,7 @@ RUN set -eu; \
   locale-gen en_US.UTF-8; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
   Say --Reset-Stopwatch; \
-  arch="$(dpkg --print-architecture)";
+  arch="$(dpkg --print-architecture)"; \
   for snap in core core18 core20 core22 snapcraft; do \
     Say "DOWNLOADING SNAP=[$snap] for arch=[$arch]"; \
     urlQuery="https://api.snapcraft.io/api/v1/snaps/details/$snap"; \
