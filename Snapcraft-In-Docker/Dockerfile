@@ -7,11 +7,13 @@ ARG UBUNTU
 RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 
 RUN set -eu; \
-  apt-get update -q || apt-get update -q || apt-get update -q; \
-  apt-get install -y -q curl sudo jq squashfs-tools snapd locales; \
-  locale-gen en_US.UTF-8; \
+  function try_and_retry() { eval "$@" || eval "$@" || eval "$@"; }; \
+  try_and_retry apt-get update -q; \
+  try_and_retry apt-get install -y -q curl; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
   Say --Reset-Stopwatch; \
+  Say "apt-get install jq squashfs-tools snapd locales ..."; \
+  try-and-retry apt-get install -y -q sudo jq squashfs-tools snapd locales; \
   arch="$(dpkg --print-architecture)"; \
   for snap in core core18 core20 core22 snapcraft; do \
     Say "DOWNLOADING SNAP=[$snap] for arch=[$arch]"; \
