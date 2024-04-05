@@ -44,7 +44,7 @@ parts:
       - ca-certificates
       # - libicu60
       # - libssl1.1
-      - liblttng-ust0
+      # - liblttng-ust0
       # - fio
 
       # curl ca-certificates libkrb5-3 zlib1g libicu60 libssl1.0.0 libssl1.1 libunwind8 libuuid1 liblttng-ust0
