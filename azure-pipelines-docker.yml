@@ -52,6 +52,16 @@ jobs:
       echo "CPU: $(Get-CpuName)"
       Say --Reset-Stopwatch
       cd snap-source
+      docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
+                 snapcraft --destructive-mode
+
+    displayName: 'Build in Docker'
+
+  - script: |
+      set -eu; set -o pipefail
+      echo "CPU: $(Get-CpuName)"
+      Say --Reset-Stopwatch
+      cd snap-source
 
       UBUNTU_VER=20.04
       image=devizervlad/systemd-on-ubuntu:${UBUNTU_VER}
@@ -77,7 +87,8 @@ jobs:
          bash -e download-binaries.sh # need for VERSION file only
          bash -e build-snap.sh
       '
-    displayName: 'Build in Docker'
+    condition: eq(1,42)
+    displayName: 'Build in Docker (Crzy)'
 
   - script: |
       set -eu; set -o pipefail
