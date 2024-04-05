@@ -24,7 +24,8 @@ RUN set -eu; \
     unsquashfs -d /snap/$snap/current $snap.snap; \
     rm -rf $snap.snap; \
   done; \
-  Say "FINISH"
+  Say "FINISH"; \
+  apt-get clean; rm -rf /var/cache/apt/* /tmp/* /var/tmp/*
 
 
 # Fix Python3 installation: Make sure we use the interpreter from
