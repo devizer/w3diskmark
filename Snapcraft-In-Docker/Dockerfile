@@ -4,6 +4,8 @@ ARG UBUNTU=xenial
 FROM ubuntu:$UBUNTU
 ARG RISK
 ARG UBUNTU
+SHELL ["/bin/bash", "-c"]
+
 RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 
 RUN set -eu; \
@@ -59,5 +61,4 @@ ENV SNAP="/snap/snapcraft/current"
 ENV SNAP_NAME="snapcraft"
 # ENV SNAP_ARCH="amd64"
 
-SHELL /bin/bash
 ENTRYPOINT [ "/bin/bash", "-c", 'export SNAP_ARCH="$(dpkg --print-architecture)"; echo "Force SNAP_ARCH=$SNAP_ARCH"; bash -c' ]
