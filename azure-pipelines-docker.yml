@@ -17,51 +17,51 @@ jobs:
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 16.04
-        BASECORE: ''
+        BASECORE: 'core'
         SNAPCRAFTVER: 4.x/stable
       'strict 16.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 16.04
-        BASECORE: ''
+        BASECORE: 'core'
         SNAPCRAFTVER: 4.x/stable
 
       'classic 18.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 18.04
-        BASECORE: 18
+        BASECORE: core18
         SNAPCRAFTVER: 7.x/stable
       'strict 18.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 18.04
-        BASECORE: 18
+        BASECORE: core18
         SNAPCRAFTVER: 7.x/stable
 
       'classic 20.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 20.04
-        BASECORE: 20
+        BASECORE: core20
         SNAPCRAFTVER: stable
       'strict 20.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 20.04
-        BASECORE: 20
+        BASECORE: core20
         SNAPCRAFTVER: stable
       'classic 22.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 22.04
-        BASECORE: 22
+        BASECORE: core22
         SNAPCRAFTVER: stable
       'strict 22.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-20.04
         SNAPIMAGE: 22.04
-        BASECORE: 22
+        BASECORE: core22
         SNAPCRAFTVER: stable
 
   steps:
@@ -100,7 +100,7 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
       bash -e download-binaries.sh
-      bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${BASECORE}"
+      bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "base" "${BASECORE}"
       chmod +x snap/hooks/configure
       chmod +x w3diskmark
       ver=$(cat bin-x64/VERSION); 
