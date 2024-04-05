@@ -13,18 +13,19 @@ jobs:
     maxParallel: 6
     matrix:
       
-      'classic 16.04':
-        CONFINEMENT: classic
-        PIPELINEIMAGE: ubuntu-22.04
-        SNAPIMAGE: 16.04
-        BASECORE: 'core'
-        SNAPCRAFTVER: 4.x/stable
-      'strict 16.04':
-        CONFINEMENT: strict
-        PIPELINEIMAGE: ubuntu-22.04
-        SNAPIMAGE: 16.04
-        BASECORE: 'core'
-        SNAPCRAFTVER: 4.x/stable
+      # incorrect python configurtion for snapcraft 4.x/stable in Dockerfile
+      # 'classic 16.04':
+      #   CONFINEMENT: classic
+      #   PIPELINEIMAGE: ubuntu-22.04
+      #   SNAPIMAGE: 16.04
+      #   BASECORE: 'core'
+      #   SNAPCRAFTVER: 4.x/stable
+      # 'strict 16.04':
+      #   CONFINEMENT: strict
+      #   PIPELINEIMAGE: ubuntu-22.04
+      #   SNAPIMAGE: 16.04
+      #   BASECORE: 'core'
+      #   SNAPCRAFTVER: 4.x/stable
 
       'classic 18.04':
         CONFINEMENT: classic
