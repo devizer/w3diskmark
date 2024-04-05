@@ -69,7 +69,7 @@ jobs:
       docker image ls
       Say "SNAPCRAFT VERSION"
       docker run -v "$PWD":/build -w /build snapcraft-image snapcraft --version
-    displayName: 'Build snapcraft-bionic image'
+    displayName: 'Build snapcraft image'
 
   - script: |
       set -eu; set -o pipefail
@@ -78,6 +78,10 @@ jobs:
       cd snap-source
       bash -e download-binaries.sh
       bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${BASECORE}"
+      chmod +x snap/hooks/configure
+      chmod +x w3diskmark
+      ver=$(cat bin-x64/VERSION); 
+      bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "version" "$ver"
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
       ls -lah
