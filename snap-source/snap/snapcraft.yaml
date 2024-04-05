@@ -21,12 +21,13 @@ parts:
       copy="$(mktemp -t w3top-$arch.XXXXXXXXX)"
       echo "Downloading [$url] for the [$SNAPCRAFT_TARGET_ARCH] arch as [$copy]"
       try-and-retry curl -ksfSL -o "$copy" "$url"
-      pushd "$SNAPCRAFT_PART_SRC"
+      # pushd is missing on core18
+      cd "$SNAPCRAFT_PART_SRC"
         tar xzf "$copy"
         rm -f "$copy"
         try-and-retry curl -ksfSL -o ./w3diskmark "https://raw.githubusercontent.com/devizer/w3diskmark/main/snap-source/w3diskmark"
         chmod +x ./w3diskmark
-      popd
+      # popd
       # SKIP: snapcraftctl pull
       echo "AFTER: "$(ls "$SNAPCRAFT_PART_SRC")
       ver="$(cat VERSION)"
