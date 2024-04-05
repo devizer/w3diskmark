@@ -18,32 +18,38 @@ jobs:
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 18.04
         BASECORE: 18
+        SNAPCRAFTVER: 7.x/stable
       'strict 18.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 18.04
         BASECORE: 18
+        SNAPCRAFTVER: 7.x/stable
 
       'classic 20.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 20.04
         BASECORE: 20
+        SNAPCRAFTVER: stable
       'strict 20.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 20.04
         BASECORE: 20
+        SNAPCRAFTVER: stable
       'classic 22.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 22.04
         BASECORE: 22
+        SNAPCRAFTVER: stable
       'strict 22.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-20.04
         SNAPIMAGE: 22.04
         BASECORE: 22
+        SNAPCRAFTVER: stable
 
   steps:
   - script: |
@@ -66,7 +72,7 @@ jobs:
       set -eu; set -o pipefail
       echo "CPU: $(Get-CpuName)"
       pushd Snapcraft-In-Docker
-      time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=${SNAPIMAGE} # bionic
+      time docker build . -t snapcraft-image --build-arg RISK="$SNAPCRAFTVER" --build-arg UBUNTU=${SNAPIMAGE} # bionic
       popd
 
       Say "IMAGES"
