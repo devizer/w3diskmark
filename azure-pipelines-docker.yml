@@ -93,7 +93,7 @@ jobs:
       docker image ls
       Say "SNAPCRAFT VERSION"
       docker run --rm -t -v "$PWD":/build -w /build snapcraft-image snapcraft --version
-    displayName: 'Build snapcraft image'
+    displayName: 'Build SnapCraft image'
 
   - script: |
       set -eu; set -o pipefail
@@ -110,40 +110,7 @@ jobs:
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
       ls -lah
-    displayName: 'Build in Docker'
-
-  - script: |
-      set -eu; set -o pipefail
-      echo "CPU: $(Get-CpuName)"
-      Say --Reset-Stopwatch
-      cd snap-source
-
-      UBUNTU_VER=20.04
-      image=devizervlad/systemd-on-ubuntu:${UBUNTU_VER}
-      try-and-retry docker pull -q $image
-      Say "Starting container from $image"
-      docker run --privileged -t -d -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro $image
-
-      # make sure SystemD is completely loaded, usually it takes about 1 second
-      wait_for_systemd="printf 'Wait for systemd on ubuntu "$UBUNTU_VER" '; ok=''; for i in {1..9}; do pgrep systemd-journal >/dev/null && ok='true' && echo ' OK' && break || printf '.'; sleep 1; done; [ -z \$ok ] && echo ' Fail';"
-      docker exec -t w3diskmak-builder bash -c "$wait_for_systemd" || true; 
-
-      # last, SystemD initialization is completed and we can install, start, check the status and read logs of a SystemD service
-      # for illustration purposes we just display the full SystemD's journal
-      sleep 1
-      Say "Container boot log"
-      docker exec w3diskmak-builder bash -c "journalctl -b";
-
-      # sudo docker run -v $(pwd):/builder --name w3diskmak-builder --hostname w3diskmak-builder -d ubuntu:20.04 tail -f /dev/null
-      docker exec -t w3diskmak-builder bash -c 'set -eu; set -o pipefail
-         cd /builder
-         apt-get update -qq; apt-get install curl snapcraft xz-utils sudo -y -qq | grep "Setting\|Unpack";
-         script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
-         bash -e download-binaries.sh # need for VERSION file only
-         bash -e build-snap.sh
-      '
-    condition: eq(1,42)
-    displayName: 'Build in Docker (Crzy)'
+    displayName: 'Build SNAP in Docker'
 
   - script: |
       set -eu; set -o pipefail
