@@ -18,7 +18,6 @@ jobs:
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 20.04
         BASECORE: 20
-        BASECORE: 20
       'strict 20.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
