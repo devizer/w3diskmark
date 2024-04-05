@@ -77,7 +77,7 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
       bash -e download-binaries.sh
-      patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${BASECORE}"
+      bash -e patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${BASECORE}"
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
       ls -lah
