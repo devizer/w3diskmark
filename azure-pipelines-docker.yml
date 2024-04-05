@@ -7,8 +7,33 @@ jobs:
 
 - job: Snapping
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: '$(PIPELINEIMAGE)'
   timeoutInMinutes: 120
+  strategy:
+    maxParallel: 4
+    matrix:
+      
+      'classic 20.04':
+        CONFINEMENT: classic
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 20.04
+        BASECORE: 20
+        BASECORE: 20
+      'strict 20.04':
+        CONFINEMENT: strict
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 20.04
+        BASECORE: 20
+      'classic 22.04':
+        CONFINEMENT: classic
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 22.04
+        BASECORE: 22
+      'strict 22.04':
+        CONFINEMENT: strict
+        PIPELINEIMAGE: ubuntu-20.04
+        SNAPIMAGE: 22.04
+        BASECORE: 22
 
   steps:
   - script: |
@@ -32,7 +57,7 @@ jobs:
       echo "CPU: $(Get-CpuName)"
       # Ver 2: custom
       pushd Snapcraft-In-Docker
-      time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=bionic # bionic
+      time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=${SNAPIMAGE} # bionic
       popd
 
       # Ver 1: as is
@@ -53,9 +78,10 @@ jobs:
       Say --Reset-Stopwatch
       cd snap-source
       bash -e download-binaries.sh
+      patch-snapcraft.sh "snap/snapcraft.yaml" "base" "core${BASECORE}"
       docker run --privileged -t -w /builder -v $(pwd):/builder --name w3diskmak-builder-2 --hostname w3diskmak-builder-2 --rm -v /sys/fs/cgroup:/sys/fs/cgroup:ro snapcraft-image \
                  snapcraft --destructive-mode
-      ls -lah 
+      ls -lah
     displayName: 'Build in Docker'
 
   - script: |
