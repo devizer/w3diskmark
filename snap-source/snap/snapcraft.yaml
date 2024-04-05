@@ -32,7 +32,7 @@ parts:
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
       # invalid control API call: variable 'version' can only be set in a part that adopts external metadata.
-      snapcraftctl set-version "$ver" || Say --Display-As=Error "snapcraftctl is not available"
+      snapcraftctl set-version "$ver" || Say --Display-As=Error "snapcraftctl is not available in docker"
       echo "KERNEL IS $(uname -r)"
       printenv | sort | grep "SNAP\|SNAPCRAFT" || true
     plugin: dump
