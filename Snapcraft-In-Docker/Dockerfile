@@ -15,6 +15,7 @@ RUN set -eu; \
   Say --Reset-Stopwatch; \
   Say "apt-get install jq squashfs-tools snapd locales ..."; \
   try-and-retry sh -c "apt-get install -y -q sudo jq squashfs-tools snapd locales | grep 'Unpack\|Setting'"; \
+  locale-gen en_US.UTF-8; \
   arch="$(dpkg --print-architecture)"; \
   for snap in core core18 core20 core22 snapcraft; do \
     Say "DOWNLOADING SNAP=[$snap] for arch=[$arch]"; \
@@ -28,7 +29,7 @@ RUN set -eu; \
     unsquashfs -d /snap/$snap/current $snap.snap; \
     rm -rf $snap.snap; \
   done; \
-  Say "FINISH DOWNLOAD. Link snapcraft to proper python"; \
+  Say "FINISH DOWNLOAD. Last, link snapcraft to proper python"; \
   apt-get clean; rm -rf /var/cache/apt/* /tmp/* /var/tmp/*
 
 
