@@ -18,13 +18,13 @@ jobs:
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 16.04
         BASECORE: ''
-        SNAPCRAFTVER: 7.x/stable
+        SNAPCRAFTVER: 4.x/stable
       'strict 16.04':
         CONFINEMENT: strict
         PIPELINEIMAGE: ubuntu-22.04
         SNAPIMAGE: 16.04
         BASECORE: ''
-        SNAPCRAFTVER: 7.x/stable
+        SNAPCRAFTVER: 4.x/stable
 
       'classic 18.04':
         CONFINEMENT: classic
