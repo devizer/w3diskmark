@@ -7,8 +7,10 @@ ARG UBUNTU
 RUN echo "Building snapcraft:$RISK in ubuntu:$UBUNTU"
 
 RUN set -eu; \
-  apt-get update -q || apt-get update -q || apt-get update -q; \
-  apt-get install -y -q curl || apt-get install -y -q curl || apt-get install -y -q curl; \
+  EchoRedError() { ANSI_RED='\033[0;31m'; ANSI_RESET='\033[0m'; if [ -z "$BASH_VERSION" ]; then echo "\n${ANSI_RED}$*${ANSI_RESET}\n" >&2; else echo -e "\n${ANSI_RED}$*${ANSI_RESET}\n" >&2; fi; }
+  RetryOnFail() { "$@" && return; EchoRedError "Retrying 2 of 3 for '$*'"; sleep 1; "$@" && return; EchoRedError "Retrying 3 of 3 for '$*'"; sleep 1; "$@"; }
+  RetryOnFail apt-get update -q; \
+  RetryOnFail apt-get install -y -q curl; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash; \
   Say --Reset-Stopwatch; \
   Say "apt-get install jq squashfs-tools snapd locales ..."; \
