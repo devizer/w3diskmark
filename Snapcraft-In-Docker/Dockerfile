@@ -10,9 +10,9 @@ RUN set -eu; \
   EchoColored() { ANSI_NC='\033[0m'; ANSI_Color_Green='\033[1;32m'; ANSI_Color_Red='\033[1;31m'; ANSI_Color_Yellow='\033[1;33m'; color="$(eval "echo \$ANSI_Color_${1}")"; shift; if [ -z "${BASH_VERSION:-}" ]; then echo "${color}$*${ANSI_NC}"; else echo -e "${color}$*${ANSI_NC}"; fi; }; \
   EchoRedError() { EchoColored Red "\n$*\n"; }; \
   RetryOnFail() { "$@" && return; EchoRedError "Retrying 2 of 3 for '$*'"; sleep 1; "$@" && return; EchoRedError "Retrying 3 of 3 for '$*'"; sleep 1; "$@"; }; \
-  EchoColored Green "[Provisioning Image] apt update"; \
+  EchoColored Green "[Provisioning Image $UBUNTU snapcraft ver $RISK] apt update"; \
   RetryOnFail apt-get update -qq; \
-  EchoColored Green "[Provisioning Image] apt install curl"; \
+  EchoColored Green "[Provisioning Image $UBUNTU snapcraft ver $RISK] apt install curl"; \
   RetryOnFail sh -c "apt-get install -y -q curl | grep 'Unpack\|Setting'"; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null; \
   Say --Reset-Stopwatch; \
