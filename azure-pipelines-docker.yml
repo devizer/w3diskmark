@@ -143,7 +143,8 @@ jobs:
       time sudo snap set w3diskmark http.port=5555
       time sudo snap restart w3diskmark 
       # bash -c w3diskmark &
-      sleep 10
+      nohup sudo snap logs -f w3diskmark &
+      sleep 33
       Say "ALL THE PROCESSES"
       sudo ps -aux
       Say "SNAP PROCESSES"
