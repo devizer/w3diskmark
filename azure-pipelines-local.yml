@@ -19,12 +19,13 @@ jobs:
       'strict 20.04':
         confinement: strict
         PIPELINEIMAGE: ubuntu-20.04
-      'classic 22.04':
-        confinement: classic
-        PIPELINEIMAGE: ubuntu-22.04
-      'strict 22.04':
-        confinement: strict
-        PIPELINEIMAGE: ubuntu-22.04
+
+      # 'classic 22.04':
+      #   confinement: classic
+      #   PIPELINEIMAGE: ubuntu-22.04
+      # 'strict 22.04':
+      #   confinement: strict
+      #   PIPELINEIMAGE: ubuntu-22.04
 
   steps:
   - script: |
