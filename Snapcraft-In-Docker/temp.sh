@@ -1,13 +1,15 @@
+  arch="$(dpkg --print-architecture)";
+  rm -rf /snap-temp/*
   for snap in core core18 core20 core22 snapcraft; do \
-    Say "DOWNLOADING SNAP $snap"; \
+    Say "DOWNLOADING SNAP=[$snap] for arch=[$arch]"; \
     urlQuery="https://api.snapcraft.io/api/v1/snaps/details/$snap"; \
     test "$snap" = "snapcraft" && urlQuery="${urlQuery}?channel=$RISK"; \
     echo "QUERY DOWNLOAD: [$urlQuery]"; \
-    url="$(curl -ksSL -H 'X-Ubuntu-Series: 16' "$urlQuery" | jq '.download_url' -r)"; \
+    url="$(curl -ksSL -H 'X-Ubuntu-Series: 16' -H "X-Ubuntu-Architecture: $arch" "$urlQuery" | jq '.download_url' -r)"; \
     echo "URL: [$url]"; \
     curl -kSL "$url" --output $snap.snap; \
     mkdir -p /snap-temp/$snap; \
     unsquashfs -d /snap-temp/$snap/current $snap.snap; \
     rm -rf $snap.snap; \
   done; \
-  Say "FINISH"; \
+  Say "FINISH"; 
