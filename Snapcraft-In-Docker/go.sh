@@ -1,0 +1,1 @@
+clear && time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=bionic # bionic

@@ -29,11 +29,18 @@ jobs:
 
   - script: |
       set -eu; set -o pipefail
-      work=$HOME/build/snapcraft-in-container
-      mkdir -p $work
-      pushd $work
-      try-and-retry curl -ksfSL -o Dockerfile https://raw.githubusercontent.com/canonical/snapcraft/main/docker/Dockerfile
-      time docker build . -t snapcraft-xenial -t snapcraft-image --no-cache --build-arg RISK=stable --build-arg UBUNTU=xenial # bionic
+      echo "CPU: $(Get-CpuName)"
+      # Ver 2: custom
+      pushd Snapcraft-In-Docker
+      time docker build . -t snapcraft-image --build-arg RISK=stable --build-arg UBUNTU=bionic # bionic
+      popd
+
+      # Ver 1: as is
+      # work=$HOME/build/snapcraft-in-container
+      # mkdir -p $work
+      # pushd $work
+      # try-and-retry curl -ksfSL -o Dockerfile https://raw.githubusercontent.com/canonical/snapcraft/main/docker/Dockerfile
+      # time docker build . -t snapcraft-xenial -t snapcraft-image --no-cache --build-arg RISK=stable --build-arg UBUNTU=xenial # bionic
       Say "IMAGES"
       docker image ls
       Say "SNAPCRAFT VERSION"
