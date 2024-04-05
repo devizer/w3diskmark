@@ -13,6 +13,17 @@ jobs:
     maxParallel: 4
     matrix:
       
+      'classic 18.04':
+        CONFINEMENT: classic
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 18.04
+        BASECORE: 18
+      'strict 18.04':
+        CONFINEMENT: strict
+        PIPELINEIMAGE: ubuntu-22.04
+        SNAPIMAGE: 18.04
+        BASECORE: 18
+
       'classic 20.04':
         CONFINEMENT: classic
         PIPELINEIMAGE: ubuntu-22.04
