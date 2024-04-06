@@ -15,6 +15,7 @@ parts:
       set -eux
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      # DEBUG: Start
       Say "PATH"
       echo "$PATH" | awk -F":" '{for (i=1; i<=NF; i++) {print "      " $i}}' | sort
       Say "snapcraftctl: [$(command -v snapcraftctl)]"
@@ -23,6 +24,7 @@ parts:
       ls -lah /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
       file    /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
       cat     /snap/snapcraft/current/libexec/snapcraft/snapcraftctl | head -99 || true
+      # DEBUG: End
       arch="$SNAPCRAFT_TARGET_ARCH";
       if [ "$arch" = "amd64" ]; then arch=x64; elif [ "$arch" = "armhf" ]; then arch=arm; fi
       url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.gz"
@@ -41,7 +43,7 @@ parts:
       ver="$(cat VERSION)"
       echo "VERSION IS [$ver] (2.41+)"
       # invalid control API call: variable 'version' can only be set in a part that adopts external metadata.
-      snapcraftctl set-version "$ver" || Say --Display-As=Error "snapcraftctl is not available in docker"
+      snapcraftctl set-version "$ver" || craftctl set version="$ver" || Say --Display-As=Error "snapcraftctl|craftctl is not available in docker"
       echo "KERNEL IS $(uname -r)"
       printenv | sort | grep "SNAP\|SNAPCRAFT" || true
     plugin: dump
