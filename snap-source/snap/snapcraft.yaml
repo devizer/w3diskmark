@@ -15,6 +15,8 @@ parts:
       set -eux
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
+      Say "PATH"
+      echo "$PATH" | awk -F":" '{for (i=1; i<=NF; i++) {print "      " $i}}' | sort
       Say "snapcraftctl: [$(command -v snapcraftctl)]"
       find / . -name snapcraftctl
       Say "/snap/snapcraft/current/libexec/snapcraft/snapcraftctl"
