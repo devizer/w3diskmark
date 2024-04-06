@@ -24,8 +24,9 @@ parts:
       ls -lah /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
       file    /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
       cat     /snap/snapcraft/current/libexec/snapcraft/snapcraftctl | head -99 || true
-      export PATH="$PATH:/snap/snapcraft/current/bin/scriptlet-bin"
       # DEBUG: End
+      # Fix Core22
+      export PATH="$PATH:/snap/snapcraft/current/bin/scriptlet-bin:/snap/snapcraft/current/libexec/snapcraft"
       arch="$SNAPCRAFT_TARGET_ARCH";
       if [ "$arch" = "amd64" ]; then arch=x64; elif [ "$arch" = "armhf" ]; then arch=arm; fi
       url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.gz"
