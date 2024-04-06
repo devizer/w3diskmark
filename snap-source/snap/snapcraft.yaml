@@ -19,7 +19,7 @@ parts:
       Say "PATH"
       echo "$PATH" | awk -F":" '{for (i=1; i<=NF; i++) {print "      " $i}}' | sort
       Say "snapcraftctl: [$(command -v snapcraftctl)]"
-      find / . -name snapcraftctl
+      find / . -name snapcraftctl -o -name craftctl
       Say "/snap/snapcraft/current/libexec/snapcraft/snapcraftctl"
       ls -lah /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
       file    /snap/snapcraft/current/libexec/snapcraft/snapcraftctl || true
