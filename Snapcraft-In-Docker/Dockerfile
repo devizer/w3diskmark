@@ -59,7 +59,7 @@ ENV LC_ALL="en_US.UTF-8"
 ENV PATH="/snap/bin:/snap/snapcraft/current/usr/bin:$PATH"
 ENV SNAP="/snap/snapcraft/current"
 ENV SNAP_NAME="snapcraft"
-# ENV SNAP_ARCH="amd64"
 
+ENV SNAP_ARCH="amd64"
 # ENTRYPOINT [ '/bin/bash', '-c', 'answer=42; export SNAP_ARCH="$(dpkg --print-architecture)"; echo "Force SNAP_ARCH=$SNAP_ARCH"; bash -c' ]
 # ENTRYPOINT [ '/bin/bash', '-c' ]
