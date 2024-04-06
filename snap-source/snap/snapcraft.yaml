@@ -16,6 +16,9 @@ parts:
       echo "BEFORE: "$(ls "$SNAPCRAFT_PART_SRC")
       script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null
       Say "snapcraftctl: [$(command -v snapcraftctl)]"
+      Say "/snap/snapcraft/11040/libexec/snapcraft/snapcraftctl"
+      ls -lah /snap/snapcraft/11040/libexec/snapcraft/snapcraftctl || true
+      file /snap/snapcraft/11040/libexec/snapcraft/snapcraftctl || true
       arch="$SNAPCRAFT_TARGET_ARCH";
       if [ "$arch" = "amd64" ]; then arch=x64; elif [ "$arch" = "armhf" ]; then arch=arm; fi
       url="https://github.com/devizer/w3top-bin/releases/latest/download/w3top-linux-$arch.tar.gz"
