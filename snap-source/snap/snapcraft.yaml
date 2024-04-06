@@ -1,4 +1,6 @@
 name: w3diskmark
+# May not work for prev core
+adopt-info: w3diskmark
 base: core20
 version: '0.1'
 summary: Cross-Platform Disk Benchmark
