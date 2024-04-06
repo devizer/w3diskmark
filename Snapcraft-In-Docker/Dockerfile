@@ -19,7 +19,7 @@ RUN set -eu; \
   script=https://raw.githubusercontent.com/devizer/test-and-build/master/install-build-tools-bundle.sh; (wget -q -nv --no-check-certificate -O - $script 2>/dev/null || curl -ksSL $script) | bash >/dev/null; \
   Say --Reset-Stopwatch; \
   Say "apt-get install jq squashfs-tools snapd locales ..."; \
-  try-and-retry sh -e -c "apt-get install -y -q sudo jq squashfs-tools snapd locales | grep 'Unpack\|Setting'"; \
+  try-and-retry sh -e -c "apt-get install -y -q sudo file jq squashfs-tools snapd locales | grep 'Unpack\|Setting'"; \
   locale-gen en_US.UTF-8; \
   arch="$(dpkg --print-architecture)"; \
   for snap in core core18 core20 core22 snapcraft; do \
